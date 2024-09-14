@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Page</title>
+</head>
+<body>
+    <!-- Displays main functions for admin-->
+    <h1>Admin Portal</h1>
+    <p><a th:href="@{admin/teachers}">Manage Teachers</a></p> <!-- links to controllers that handle specified functions -->
+    <p><a th:href="@{admin/students}">Manage Students</a></p>
+    <p><a th:href="@{admin/courses}">Manage Courses</a> </p>
+</body>
+</html>
