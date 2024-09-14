@@ -19,4 +19,18 @@ public class AdminController {   // all of the admin functions will be managed b
 
         return "teacher-admin";
     }
+
+    // displays student page for admin related functions
+    @GetMapping("/students")
+    public String showStudents() {
+
+        return "student-admin";
+    }
+
+    // displays course page for admin related functions
+    @GetMapping("/courses")
+    public String showCourses() {
+
+        return "course-admin";
+    }
 }
