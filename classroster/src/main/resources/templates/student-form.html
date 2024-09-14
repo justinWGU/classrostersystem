@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Form</title>
+</head>
+<body>
+  <h1>Create Student</h1>
+  <!--  Form sends post request to the students controller that handles adding new student to database-->
+  <form th:action="@{/students}" th:object="${student}" method="post"> <!-- The form tag's th:obj att sets which object this form is going to interact with from the model-->
+    <label for="name">Name:</label>
+    <input id="name" th:field="${student.name}" type="text">
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>

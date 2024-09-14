@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student List</title>
+</head>
+<body>
+  <h1>Student List</h1>
+
+    <!--  Sends to controller that handles adding new stud-->
+  <a th:href="@{/students/new}">Add new student</a>
+
+  <!--  Loops through students list from model and prints out their name one at a time-->
+  <p th:each="student: ${students}">
+      <span th:text="${student.name}"></span>
+  </p>
+</body>
+</html>
