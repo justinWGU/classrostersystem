@@ -4,6 +4,15 @@
     <title>Admin Teacher Management Page</title>
 </head>
 <body>
+
   <h1>Manage Teachers</h1>
+
+  <!--Display form to search for a teacher by id with buttons beside each teacher object to update, delete, and assign courses to them.-->
+  <form th:action="@{/admin/search}" th:object="${teacher}" method="post"> <!-- Pass text to controller that will handle searching for a teacher -->
+      <label for="search">Teacher Id</label>
+      <p><input type="text" id="search" th:field="*{id}" placeholder="Enter Teacher Id"></p> <!-- th:field specifies what obj's field to work wtih -->
+      <button type="submit">Search</button>
+  </form>
+
 </body>
 </html>

@@ -1,6 +1,8 @@
 package com.example.classroster.controllers;
 
+import com.example.classroster.entity.Teacher;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -15,8 +17,11 @@ public class AdminController {   // all of the admin functions will be managed b
 
     // displays teacher page for admin related functs
     @GetMapping("/teachers")
-    public String showTeachers() {
+    public String showTeachers(Model model) {
 
+        // create teacher object to pass to html page
+        Teacher teacher = new Teacher();
+        model.addAttribute("teacher", teacher);
         return "teacher-admin";
     }
 
