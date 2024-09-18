@@ -7,12 +7,45 @@
 
   <h1>Manage Teachers</h1>
 
-  <!--Display form to search for a teacher by id with buttons beside each teacher object to update, delete, and assign courses to them.-->
-  <form th:action="@{/admin/search}" th:object="${teacher}" method="post"> <!-- Pass text to controller that will handle searching for a teacher -->
+  <!--Display form to search for a teacher-->
+  <form th:action="@{/admin/search}" th:object="${searchTeacher}" method="post" style="display: inline"> <!-- Pass text to controller that will handle searching for a teacher -->
       <label for="search">Teacher Id</label>
-      <p><input type="text" id="search" th:field="*{id}" placeholder="Enter Teacher Id"></p> <!-- th:field specifies what obj's field to work wtih -->
-      <button type="submit">Search</button>
+      <input type="text" id="search" th:field="${searchTeacher.name}" placeholder="Enter Teacher Id"> <!-- th:field specifies what obj's field to work wtih -->
+      <button type="submit" style="display: inline">Search</button>
   </form>
+
+  <!-- add teacher button -->
+  <form th:action="@{/admin/teacher-add}" method="get" style="display: inline">
+      <input type="hidden" id="teacher-add">
+      <button type="submit">Add Teacher</button>
+  </form>
+
+  <!-- Displays list of all teachers with action buttons beside them-->
+  <ul>
+        <li th:each="teacher: ${teachers}">
+
+            <span th:text="${teacher.name}"></span>
+
+            <!-- Update button -->
+            <form th:action="@{/admin/teacher-update}" method="get" style="display: inline">
+                <input type="hidden" id="teacher-update" th:value="${teacher.id}">
+                <button type="submit">Update</button>
+            </form>
+
+            <!-- Delete teacher button -->
+            <form th:action="@{/admin/teacher-delete}" method="get" style="display: inline">
+                <input type="hidden" id="teacher-delete" th:value="${teacher.id}">
+                <button type="submit">Delete</button>
+            </form>
+
+            <!-- Assign course to teacher button -->
+            <form th:action="@{/admin/teacher-assign}" method="get" style="display: inline">
+                <input type="hidden" id="teacher-assign" th:value="${teacher.id}">
+                <button type="submit">Assign Course</button>
+            </form>
+
+        </li>
+    </ul>
 
 </body>
 </html>
