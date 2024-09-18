@@ -15,12 +15,22 @@ public class Course {
     @JoinColumn(name = "teacher_id")
     private Teacher teacher;
 
+    public Course() {
+    }
+
+    public Course(String name) {
+        this.name = name;
+    }
+
     @ManyToMany
     @JoinTable(
             name = "course_student",
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id")
     )
+
+
+
     private List<Student> students;
 
     public Long getId() {

@@ -1,10 +1,51 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><head>
     <meta charset="UTF-8">
     <title>Admin Student Management Page</title>
 </head>
 <body>
-  <h1>Manage Students</h1>
+
+<h1>Manage Students</h1>
+
+<!--Display form to search for a student-->
+<form th:action="@{/admin/student-search}" th:object="${searchStudent}" method="post" style="display: inline"> <!-- Pass text to controller that will handle searching for a student -->
+    <label for="search">Student Id</label>
+    <input type="text" id="search" th:field="${searchStudent.id}" placeholder="Enter Student Id"> <!-- th:field specifies what obj's field to work wtih -->
+    <button type="submit" style="display: inline">Search</button>
+</form>
+
+<!-- add student button -->
+<form th:action="@{/admin/student-add}" method="get" style="display: inline">
+    <input type="hidden" id="student-add">
+    <button type="submit">Add Student</button>
+</form>
+
+<!-- Displays list of all students with action buttons beside them-->
+<ul>
+    <li th:each="student: ${students}">
+
+        <span th:text="${student.name}"></span>
+
+        <!-- Update button -->
+        <form th:action="@{/admin/student-update}" method="get" style="display: inline">
+            <input type="hidden" id="student-update" th:value="${student.id}">
+            <button type="submit">Update</button>
+        </form>
+
+        <!-- Delete student button -->
+        <form th:action="@{/admin/student-delete}" method="get" style="display: inline">
+            <input type="hidden" id="student-delete" th:value="${student.id}">
+            <button type="submit">Delete</button>
+        </form>
+
+        <!-- Assign course to student button -->
+        <form th:action="@{/admin/student-assign}" method="get" style="display: inline">
+            <input type="hidden" id="student-assign" th:value="${student.id}">
+            <button type="submit">Assign Course</button>
+        </form>
+
+    </li>
+</ul>
+
 </body>
 </html>

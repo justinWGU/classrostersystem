@@ -1,11 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"><head>
     <meta charset="UTF-8">
     <title>Admin Course Management Page</title>
 </head>
 <body>
-  <h1>Manage Courses</h1>
+
+<h1>Manage Courses</h1>
+
+<!--Display form to search for a course-->
+<form th:action="@{/admin/course-search}" th:object="${searchCourse}" method="post" style="display: inline"> <!-- Pass text to controller that will handle searching for a course -->
+    <label for="search">Course Id</label>
+    <input type="text" id="search" th:field="${searchCourse.id}" placeholder="Enter Course Id"> <!-- th:field specifies what obj's field to work wtih -->
+    <button type="submit" style="display: inline">Search</button>
+</form>
+
+<!-- add course button -->
+<form th:action="@{/admin/course-add}" method="get" style="display: inline">
+    <input type="hidden" id="course-add">
+    <button type="submit">Add course</button>
+</form>
+
+<!-- Displays list of all courses with action buttons beside them-->
+<ul>
+    <li th:each="course: ${courses}">
+
+        <span th:text="${course.name}"></span>
+
+        <!-- Update button -->
+        <form th:action="@{/admin/course-update}" method="get" style="display: inline">
+            <input type="hidden" id="course-update" th:value="${course.id}">
+            <button type="submit">Update</button>
+        </form>
+
+        <!-- Delete course button -->
+        <form th:action="@{/admin/course-delete}" method="get" style="display: inline">
+            <input type="hidden" id="course-delete" th:value="${course.id}">
+            <button type="submit">Delete</button>
+        </form>
+
+        <!-- Assign course to course button -->
+        <form th:action="@{/admin/course-assign}" method="get" style="display: inline">
+            <input type="hidden" id="course-assign" th:value="${course.id}">
+            <button type="submit">Assign Students</button>
+        </form>
+
+    </li>
+</ul>
 
 </body>
 </html>

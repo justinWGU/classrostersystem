@@ -1,6 +1,10 @@
 package com.example.classroster.controllers;
 
+import com.example.classroster.entity.Course;
+import com.example.classroster.entity.Student;
 import com.example.classroster.entity.Teacher;
+import com.example.classroster.services.CourseService;
+import com.example.classroster.services.StudentService;
 import com.example.classroster.services.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,13 +18,16 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminController {   // all of the admin functions will be managed by this controller
-
-    private TeacherService teacherService;
+public class AdminController {
+    private final StudentService studentService;   // all of the admin functions will be managed by this controller
+    private final TeacherService teacherService;
+    private final CourseService courseService;
 
     @Autowired
-    public AdminController (TeacherService teacherService) {
+    public AdminController (TeacherService teacherService, StudentService studentService, CourseService courseService) {
         this.teacherService = teacherService;
+        this.studentService = studentService;
+        this.courseService = courseService;
     }
 
     @GetMapping("/home")
@@ -44,14 +51,30 @@ public class AdminController {   // all of the admin functions will be managed b
 
     // displays student page for admin related functions
     @GetMapping("/students")
-    public String showStudents() {
+    public String showStudents(Model model) {
+
+        // get list of students from DB to put to display
+        List<Student> students = studentService.getAllStudents(); // list might be empty
+        model.addAttribute("students", students);
+
+        // create student object to bind to search form
+        Student student = new Student();
+        model.addAttribute("searchStudent", student);
 
         return "student-admin";
     }
 
     // displays course page for admin related functions
     @GetMapping("/courses")
-    public String showCourses() {
+    public String showCourses(Model model) {
+
+        // get list of courses from DB to put to display
+        List<Course> courses = courseService.getAllCourses(); // list might be empty
+        model.addAttribute("courses", courses);
+
+        // create course object to bind to search form
+        Course course = new Course();
+        model.addAttribute("searchCourse", course);
 
         return "course-admin";
     }
