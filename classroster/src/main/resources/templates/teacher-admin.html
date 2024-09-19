@@ -31,13 +31,13 @@
 
             <!-- Update button -->
             <form th:action="@{/admin/teacher-update}" method="get" style="display: inline">
-                <input type="hidden" id="teacher-update" th:value="${teacher.id}">
+                <input type="hidden" name="id" th:value="${teacher.id}">
                 <button type="submit">Update</button>
             </form>
 
             <!-- Delete teacher button -->
             <form th:action="@{/admin/teacher-delete}" method="get" style="display: inline">
-                <input type="hidden" id="teacher-delete" th:value="${teacher.id}">
+                <input type="hidden" name="teacher-delete" th:value="${teacher.id}">
                 <button type="submit">Delete</button>
             </form>
 

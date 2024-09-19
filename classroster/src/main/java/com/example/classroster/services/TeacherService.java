@@ -19,8 +19,8 @@ public class TeacherService {
         return teacherRepository.findAll();
     }
 
-    public Optional<Teacher> getTeacher(long id) {
-        return teacherRepository.findById(id);
+    public Teacher getTeacher(long id) {
+        return teacherRepository.findById(id).orElse(null);
     }
 
     public void saveTeacher(Teacher teacher) {

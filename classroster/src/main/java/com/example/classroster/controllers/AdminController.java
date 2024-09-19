@@ -53,7 +53,7 @@ public class AdminController {
     public String teacherSearch(@ModelAttribute Teacher searchTeacher, RedirectAttributes redirectAttributes) {
 
         // check for teacher existence using the user provided id
-        if (teacherService.getTeacher(searchTeacher.getId()).isPresent()) {
+        if (!(teacherService.getTeacher(searchTeacher.getId()) == null)) {
 
             // if teacher exists, redirect to teacher-details page
             return "redirect:/admin/teachers/" + searchTeacher.getId();
@@ -86,6 +86,37 @@ public class AdminController {
         redirectAttributes.addFlashAttribute("successMessage", "Successfully added " + teacher.getName() + " as a new teacher!");
 
         return "redirect:/admin/teacher-add";
+    }
+
+    // controller to update teacher data
+    @GetMapping("/teacher-update")
+    public String updateTeacher(@RequestParam Long id, Model model) { // get input tag with the specified name
+
+        // use id param to search for teacher and pass to front end
+        model.addAttribute("teacher", teacherService.getTeacher(id));
+
+        return "teacher-update";
+    }
+
+    // update teacher information
+    @PostMapping("/teacher-update")
+    public String updateTeacher(@ModelAttribute Teacher teacher) {
+
+        // update existing teacher with updated teachers data
+        Teacher currentTeacher = teacherService.getTeacher(teacher.getId());
+        currentTeacher.setName(teacher.getName());
+        teacherService.saveTeacher(currentTeacher);
+
+        return "redirect:/admin/teacher-update-success/" + currentTeacher.getId();
+    }
+
+    // display updated teacher success page
+    @GetMapping("/teacher-update-success/{id}")
+    public String teacherUpdateSuccess(@PathVariable Long id, Model model) {
+
+        model.addAttribute("teacher", teacherService.getTeacher(id));
+
+        return "teacher-update-success";
     }
 
     // display teacher details page based on the id param
