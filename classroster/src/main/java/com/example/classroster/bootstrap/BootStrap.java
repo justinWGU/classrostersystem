@@ -26,11 +26,6 @@ public class BootStrap implements CommandLineRunner {
     @Override // method that runs when app starts to create sample data
     public void run(String... args) throws Exception {
 
-        // reset database
-        courseService.deleteAllCourses();
-        teacherService.deleteAllTeachers();
-        studentService.deleteAllStudents();
-
         // create new courses and add them to DBs
         courseService.saveCourse(new Course("Course1"));
         courseService.saveCourse(new Course("Course2"));

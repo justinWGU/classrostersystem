@@ -67,6 +67,27 @@ public class AdminController {
         }
     }
 
+    // controller to add a new teacher
+    @GetMapping("/teacher-add")
+    public String teacherAdd(Model model) {
+
+        // creates new teacher obj so user can fill out form
+        model.addAttribute("teacher", new Teacher());
+        return "teacher-add";
+    }
+
+    // adds teacher created by user data, and redirects to teacher add page
+    @PostMapping("/teacher-add")
+    public String teacherAdd(@ModelAttribute Teacher teacher, RedirectAttributes redirectAttributes) {
+
+        // add teacher to DB
+        teacherService.saveTeacher(new Teacher(teacher.getName()));
+
+        redirectAttributes.addFlashAttribute("successMessage", "Successfully added " + teacher.getName() + " as a new teacher!");
+
+        return "redirect:/admin/teacher-add";
+    }
+
     // display teacher details page based on the id param
     @GetMapping("/teachers/{id}")
     public String teacherDetails(@PathVariable Long id, Model model) { // get parameter from URL based on its name
@@ -74,6 +95,7 @@ public class AdminController {
         model.addAttribute("teacher", teacherService.getTeacher(id));
         return "teacher-details";
     }
+
 
     // displays student page for admin related functions
     @GetMapping("/students")

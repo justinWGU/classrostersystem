@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Teacher Add Page</title>
+</head>
+<body>
+
+  <!-- Conditionally display success message -->
+  <p th:if="${successMessage}" th:text="${successMessage}"></p>
+
+  <!-- Form to add a new teacher -->
+  <form th:action="@{/admin/teacher-add}" th:object="${teacher}" method="post">
+    <label for="teacher-add">Enter teacher name: </label>
+    <input type="text" id="teacher-add" th:field="${teacher.name}">
+    <button type="submit">Submit</button>
+  </form>
+
+</body>
+</html>
