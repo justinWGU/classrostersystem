@@ -9,11 +9,9 @@ import com.example.classroster.services.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -46,7 +44,35 @@ public class AdminController {
         // create teacher object to bind to search form
         Teacher teacher = new Teacher();
         model.addAttribute("searchTeacher", teacher);
+
         return "teacher-admin";
+    }
+
+    // Check for teacher existence in database and return to front end
+    @PostMapping("/teacher-search")
+    public String teacherSearch(@ModelAttribute Teacher searchTeacher, RedirectAttributes redirectAttributes) {
+
+        // check for teacher existence using the user provided id
+        if (teacherService.getTeacher(searchTeacher.getId()).isPresent()) {
+
+            // if teacher exists, redirect to teacher-details page
+            return "redirect:/admin/teachers/" + searchTeacher.getId();
+
+        } else { // else return to searchTeacher page with error message
+
+            // add error message
+            redirectAttributes.addFlashAttribute("errormessage", "No teacher with the given id exists.");
+            return "redirect:/admin/teachers";
+
+        }
+    }
+
+    // display teacher details page based on the id param
+    @GetMapping("/teachers/{id}")
+    public String teacherDetails(@PathVariable Long id, Model model) { // get parameter from URL based on its name
+
+        model.addAttribute("teacher", teacherService.getTeacher(id));
+        return "teacher-details";
     }
 
     // displays student page for admin related functions

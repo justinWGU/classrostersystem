@@ -7,7 +7,10 @@
 
   <h1>Manage Teachers</h1>
 
-  <!--Display form to search for a teacher-->
+  <!-- Display error message from failed teacher search -->
+  <div th:if="${errormessage}" th:text="${errormessage}"></div>
+
+  <!-- Display form to search for a teacher -->
   <form th:action="@{/admin/teacher-search}" th:object="${searchTeacher}" method="post" style="display: inline"> <!-- Pass text to controller that will handle searching for a teacher -->
       <label for="search">Teacher Id</label>
       <input type="text" id="search" th:field="${searchTeacher.id}" placeholder="Enter Teacher Id"> <!-- th:field specifies what obj's field to work wtih -->
