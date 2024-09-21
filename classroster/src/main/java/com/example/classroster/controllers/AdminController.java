@@ -127,6 +127,16 @@ public class AdminController {
         return "teacher-details";
     }
 
+    // handle post request from front end
+    @PostMapping("/teacher-delete")
+    public String teacherDelete(@RequestParam Long id) { // get id from FE
+
+        // search using id & delete from DB
+        teacherService.deleteTeacher(teacherService.getTeacher(id));
+
+        // redirect to GetMap to teacher admin page
+        return "redirect:/admin/teachers";
+    }
 
     // displays student page for admin related functions
     @GetMapping("/students")

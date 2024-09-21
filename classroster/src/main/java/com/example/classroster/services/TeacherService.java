@@ -27,6 +27,10 @@ public class TeacherService {
         teacherRepository.save(teacher);
     }
 
+    public void deleteTeacher(Teacher teacher) {
+        teacherRepository.delete(teacher);
+    }
+
     public void deleteAllTeachers() {
         teacherRepository.deleteAll();
     }
