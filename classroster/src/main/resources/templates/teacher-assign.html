@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Teacher Assign Courses Page</title>
+
+</head>
+<body>
+  <h1>Teacher: <span th:text="${teacher.name}"></span></h1>
+  <p>Assign Courses</p>
+
+  <!-- display unassigned courses -->
+  <p>Unassigned Courses:</p>
+  <!-- Add assign button beside every list item -->
+  <ul>
+    <li th:each="course : ${courseList}">
+    <span th:text="${course.name}"></span>
+    <form th:action="@{/admin/teacher-assign}" method="post" style="display: inline">
+      <input type="hidden" name="courseId" th:value="${course.id}">
+      <input type="hidden" name="teacherId" th:value="${teacher.id}">
+      <button type="submit">Assign</button>
+    </form>
+    </li>
+  </ul>
+
+  <!-- display teacher's assigned course list -->
+  <p>Current Course</p>
+  <!-- for each course in List<Course> AllCourses -->
+  <ul th:each="course : ${teacherCourseList}">
+    <!-- put course's name to output -->
+    <li th:text="${course.name}"></li>
+  </ul>
+
+</body>
+</html>

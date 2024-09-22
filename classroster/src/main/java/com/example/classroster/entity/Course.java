@@ -12,7 +12,7 @@ public class Course {
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "teacher_id")
+    @JoinColumn(name = "teacher_id", nullable = true) // allow courses to exist without a teacher
     private Teacher teacher;
 
     public Course() {
@@ -28,9 +28,6 @@ public class Course {
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id")
     )
-
-
-
     private List<Student> students;
 
     public Long getId() {

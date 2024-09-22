@@ -13,18 +13,29 @@ public class Teacher {
 
     private String name;
 
-    @OneToMany(mappedBy = "teacher")
-    private List<Course> courses;
+    // cascade all: Whenever a teacher is saved or deleted, associated courses will do the same
+    // orphanRemoval: Whenever an associated course is removed from teacher, also delete it from DB
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Course> courses = new ArrayList<>();
 
     public Teacher() {
-        this.courses = new ArrayList<>();
     }
 
     public Teacher(String name) {
         this.name = name;
-        this.courses = new ArrayList<>();
     }
 
+    // When passing already existing courses to teacher, teacher must be explicitly assigned to each course
+    public Teacher(String name, List<Course> courses) {
+        this.name = name;
+        setCourses(courses);
+    }
+
+    // add a course to teacher's list of courses and assign teacher to that course
+    public void addCourse(Course course) {
+        courses.add(course);
+        course.setTeacher(this);
+    }
     public String getName() {
         return name;
     }
@@ -38,7 +49,9 @@ public class Teacher {
     }
 
     public void setCourses(List<Course> courses) {
-        this.courses = courses;
+        for (Course course: courses) {
+            addCourse(course);
+        }
     }
 
     public Long getId() {

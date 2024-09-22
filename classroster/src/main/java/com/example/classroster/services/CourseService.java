@@ -3,6 +3,8 @@ import com.example.classroster.entity.Course;
 import com.example.classroster.repositories.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,4 +28,9 @@ public class CourseService {
     public void deleteAllCourses() {
         courseRepository.deleteAll();
     }
+
+    public List<Course> getCoursesWithoutTeachers() {
+
+        return courseRepository.findByTeacherIsNull();
+      }
 }

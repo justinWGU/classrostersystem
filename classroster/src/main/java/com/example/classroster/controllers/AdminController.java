@@ -138,6 +138,38 @@ public class AdminController {
         return "redirect:/admin/teachers";
     }
 
+    // handle assign teacher courses button
+    @GetMapping("/teacher-assign")
+    public String teacherAssign(@RequestParam Long id, Model model) {
+
+        // add teacher to model
+        model.addAttribute("teacher", teacherService.getTeacher(id));
+
+        // get teacher's course list & add to model
+        model.addAttribute("teacherCourseList", teacherService.getTeacher(id).getCourses());
+
+        // get list of unassigned courses
+        model.addAttribute("courseList", courseService.getCoursesWithoutTeachers());
+
+        return "teacher-assign";
+    }
+
+    // assign teacher to specified course
+    @PostMapping("/teacher-assign")
+    public String teacherAssign(@RequestParam Long courseId, @RequestParam Long teacherId) {
+        // retrieve teacher from DB
+        Teacher teacher = teacherService.getTeacher(teacherId);
+
+        // assign teacher to course
+        Course course = courseService.getCourse(courseId);
+
+        // save teacher and course to DB
+        teacher.addCourse(course);
+        teacherService.saveTeacher(teacher);
+
+        return "redirect:/admin/teacher-assign?id=" + teacherId;
+    }
+
     // displays student page for admin related functions
     @GetMapping("/students")
     public String showStudents(Model model) {
