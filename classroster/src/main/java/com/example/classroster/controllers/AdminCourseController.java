@@ -53,13 +53,36 @@ public class AdminCourseController {
             redirectAttributes.addFlashAttribute("errorMessage", "No course with the given id exists.");
             return "redirect:/admin/courses";
 
-        }
+            }
     }
-        // display course details page based on the id param
-        @GetMapping("/courses/{id}")
-        public String courseDetails(@PathVariable Long id, Model model) { // get parameter from URL based on its name
+    // display course details page based on the id param
+    @GetMapping("/courses/{id}")
+    public String courseDetails(@PathVariable Long id, Model model) { // get parameter from URL based on its name
+        
+        model.addAttribute("course", courseService.getCourse(id));
+        
+        return "course-details";
+    }
 
-            model.addAttribute("course", courseService.getCourse(id));
-            return "course-details";
-        }
+    // Add Course
+    @GetMapping("/course-add")
+    public String courseAdd(Model model) {
+
+        // creates new Course obj so user can fill out form
+        model.addAttribute("course", new Course());
+
+        return "course-add";
+    }
+
+    // adds course created by user data, and redirects to course add page
+    @PostMapping("/course-add")
+    public String courseAdd(@ModelAttribute Course course, RedirectAttributes redirectAttributes) {
+
+        // add course to DB
+        courseService.saveCourse(new Course(course.getName()));
+
+        redirectAttributes.addFlashAttribute("successMessage", "Successfully added " + course.getName() + " as a new course!");
+
+        return "redirect:/admin/course-add";
+    }    
 }

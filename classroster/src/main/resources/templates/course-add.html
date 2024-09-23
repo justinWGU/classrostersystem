@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Course Add Page</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+
+    <!-- Conditionally display success message -->
+    <p class="success" th:if="${successMessage}" th:text="${successMessage}"></p>
+
+    <!-- Form to add a new course -->
+    <form th:action="@{/admin/course-add}" th:object="${course}" method="post">
+        <label for="course-add">Enter course name: </label>
+        <input type="text" id="course-add" th:field="${course.name}">
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+</html>
