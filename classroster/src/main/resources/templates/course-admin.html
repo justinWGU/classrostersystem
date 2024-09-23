@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"><head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/styles.css}">
     <title>Admin Course Management Page</title>
 </head>
 <body>
 
 <h1>Manage Courses</h1>
+
+<!-- Display error message from failed teacher search -->
+<div class="error" th:if="${errorMessage}" th:text="${errorMessage}"></div>
+
 
 <!--Display form to search for a course-->
 <form th:action="@{/admin/course-search}" th:object="${searchCourse}" method="post" style="display: inline"> <!-- Pass text to controller that will handle searching for a course -->

@@ -16,13 +16,13 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
-public class AdminController {
+public class AdminTeacherController {
     private final StudentService studentService;   // all of the admin functions will be managed by this controller
     private final TeacherService teacherService;
     private final CourseService courseService;
 
     @Autowired
-    public AdminController (TeacherService teacherService, StudentService studentService, CourseService courseService) {
+    public AdminTeacherController(TeacherService teacherService, StudentService studentService, CourseService courseService) {
         this.teacherService = teacherService;
         this.studentService = studentService;
         this.courseService = courseService;
@@ -185,18 +185,4 @@ public class AdminController {
         return "student-admin";
     }
 
-    // displays course page for admin related functions
-    @GetMapping("/courses")
-    public String showCourses(Model model) {
-
-        // get list of courses from DB to put to display
-        List<Course> courses = courseService.getAllCourses(); // list might be empty
-        model.addAttribute("courses", courses);
-
-        // create course object to bind to search form
-        Course course = new Course();
-        model.addAttribute("searchCourse", course);
-
-        return "course-admin";
-    }
 }
