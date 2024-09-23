@@ -61,13 +61,13 @@ public class AdminTeacherController {
         } else { // else return to searchTeacher page with error message
 
             // add error message
-            redirectAttributes.addFlashAttribute("errormessage", "No teacher with the given id exists.");
+            redirectAttributes.addFlashAttribute("errorMessage", "No teacher with the given id exists.");
             return "redirect:/admin/teachers";
 
         }
     }
 
-    // controller to add a new teacher
+    // Add Teacher
     @GetMapping("/teacher-add")
     public String teacherAdd(Model model) {
 

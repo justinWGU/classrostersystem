@@ -33,4 +33,8 @@ public class CourseService {
 
         return courseRepository.findByTeacherIsNull();
       }
+
+      public void deleteCourse(Course course) {
+        courseRepository.delete(course);
+      }
 }

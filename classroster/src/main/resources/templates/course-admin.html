@@ -12,6 +12,9 @@
 <!-- Display error message from failed teacher search -->
 <div class="error" th:if="${errorMessage}" th:text="${errorMessage}"></div>
 
+<!--Delete Course success msg-->
+<div class="success" th:if="${successMessage}" th:text="${successMessage}"></div>
+
 
 <!--Display form to search for a course-->
 <form th:action="@{/admin/course-search}" th:object="${searchCourse}" method="post" style="display: inline"> <!-- Pass text to controller that will handle searching for a course -->
@@ -34,13 +37,13 @@
 
         <!-- Update button -->
         <form th:action="@{/admin/course-update}" method="get" style="display: inline">
-            <input type="hidden" id="course-update" th:value="${course.id}">
+            <input type="hidden" name="id" th:value="${course.id}">
             <button type="submit">Update</button>
         </form>
 
         <!-- Delete course button -->
-        <form th:action="@{/admin/course-delete}" method="get" style="display: inline">
-            <input type="hidden" id="course-delete" th:value="${course.id}">
+        <form th:action="@{/admin/course-delete}" method="post" style="display: inline">
+            <input type="hidden" name="id" th:value="${course.id}">
             <button type="submit">Delete</button>
         </form>
 

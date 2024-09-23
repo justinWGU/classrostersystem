@@ -8,7 +8,7 @@
   <h1>Manage Teachers</h1>
 
   <!-- Display error message from failed teacher search -->
-  <div th:if="${errormessage}" th:text="${errormessage}"></div>
+  <div class="error" th:if="${errorMessage}" th:text="${errorMessage}"></div>
 
   <!-- Display form to search for a teacher -->
   <form th:action="@{/admin/teacher-search}" th:object="${searchTeacher}" method="post" style="display: inline"> <!-- Pass text to controller that will handle searching for a teacher -->

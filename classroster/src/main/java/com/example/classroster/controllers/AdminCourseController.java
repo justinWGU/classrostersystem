@@ -1,6 +1,7 @@
 package com.example.classroster.controllers;
 
 import com.example.classroster.entity.Course;
+import com.example.classroster.entity.Teacher;
 import com.example.classroster.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -84,5 +85,86 @@ public class AdminCourseController {
         redirectAttributes.addFlashAttribute("successMessage", "Successfully added " + course.getName() + " as a new course!");
 
         return "redirect:/admin/course-add";
-    }    
+    }
+
+    // controller to update course data
+    @GetMapping("/course-update")
+    public String updateCourse(@RequestParam Long id, Model model) { // get input tag with the specified name
+
+        // use id param to search for course and pass to front end
+        model.addAttribute("course", courseService.getCourse(id));
+
+        return "course-update";
+    }
+
+    // update course information
+    @PostMapping("/course-update")
+    public String updateCourse(@ModelAttribute Course course) {
+
+        // update existing course with updated courses data
+        Course currentCourse = courseService.getCourse(course.getId());
+        currentCourse.setName(course.getName());
+        courseService.saveCourse(currentCourse);
+
+        return "redirect:/admin/course-update-success/" + currentCourse.getId();
+    }
+
+    // display updated course success page
+    @GetMapping("/course-update-success/{id}")
+    public String courseUpdateSuccess(@PathVariable Long id, Model model) {
+
+        model.addAttribute("course", courseService.getCourse(id));
+
+        return "course-update-success";
+    }
+
+    // Delete Course
+    @PostMapping("/course-delete")
+    public String courseDelete(@RequestParam Long id, RedirectAttributes redirectAttributes) { // get id from FE
+
+        // capture Course name for success msg
+        String courseName = courseService.getCourse(id).getName();
+
+        // search using id & delete from DB
+        courseService.deleteCourse(courseService.getCourse(id));
+
+        // Delete Course success message
+        redirectAttributes.addFlashAttribute("successMessage", courseName + " Course successfully deleted!");
+
+        // redirect to GetMap to course admin page
+        return "redirect:/admin/courses";
+    }
+
+    // handle assign teacher courses button
+    @GetMapping("/teacher-assign")
+    public String teacherAssign(@RequestParam Long id, Model model) {
+
+        // add teacher to model
+        model.addAttribute("teacher", teacherService.getTeacher(id));
+
+        // get teacher's course list & add to model
+        model.addAttribute("teacherCourseList", teacherService.getTeacher(id).getCourses());
+
+        // get list of unassigned courses
+        model.addAttribute("courseList", courseService.getCoursesWithoutTeachers());
+
+        return "teacher-assign";
+    }
+
+    // assign teacher to specified course
+    @PostMapping("/teacher-assign")
+    public String teacherAssign(@RequestParam Long courseId, @RequestParam Long teacherId) {
+        // retrieve teacher from DB
+        Teacher teacher = teacherService.getTeacher(teacherId);
+
+        // assign teacher to course
+        Course course = courseService.getCourse(courseId);
+
+        // save teacher and course to DB
+        teacher.addCourse(course);
+        teacherService.saveTeacher(teacher);
+
+        return "redirect:/admin/teacher-assign?id=" + teacherId;
+    }
+
 }
