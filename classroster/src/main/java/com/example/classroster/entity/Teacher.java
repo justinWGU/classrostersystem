@@ -15,7 +15,7 @@ public class Teacher {
 
     // cascade all: Whenever a teacher is saved or deleted, associated courses will do the same
     // orphanRemoval: Whenever an associated course is removed from teacher, also delete it from DB
-    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = false)
     private List<Course> courses = new ArrayList<>();
 
     public Teacher() {

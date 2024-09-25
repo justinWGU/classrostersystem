@@ -53,6 +53,9 @@ public class Course {
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
     }
+    public void addStudents(Student student) {
+        students.add(student);
+    }
 
     public List<Student> getStudents() {
         return students;

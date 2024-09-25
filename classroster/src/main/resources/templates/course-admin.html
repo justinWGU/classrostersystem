@@ -49,7 +49,7 @@
 
         <!-- Assign course to course button -->
         <form th:action="@{/admin/course-assign}" method="get" style="display: inline">
-            <input type="hidden" id="course-assign" th:value="${course.id}">
+            <input type="hidden" name="id" th:value="${course.id}">
             <button type="submit">Assign Students</button>
         </form>
 

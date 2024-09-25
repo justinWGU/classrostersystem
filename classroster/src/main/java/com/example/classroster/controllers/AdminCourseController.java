@@ -1,8 +1,10 @@
 package com.example.classroster.controllers;
 
 import com.example.classroster.entity.Course;
+import com.example.classroster.entity.Student;
 import com.example.classroster.entity.Teacher;
 import com.example.classroster.services.CourseService;
+import com.example.classroster.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +19,12 @@ import java.util.List;
 public class AdminCourseController {
 
     private final CourseService courseService;
+    private final StudentService studentService;
 
     @Autowired
-    public AdminCourseController(CourseService courseService) {
+    public AdminCourseController(CourseService courseService, StudentService studentService) {
         this.courseService = courseService;
+        this.studentService = studentService;
     }
 
     // Admin Course Home page
@@ -135,36 +139,40 @@ public class AdminCourseController {
         return "redirect:/admin/courses";
     }
 
-    // handle assign teacher courses button
-    @GetMapping("/teacher-assign")
-    public String teacherAssign(@RequestParam Long id, Model model) {
+    // Assign button
+    @GetMapping("/course-assign")
+    public String courseAssign(@RequestParam Long id, Model model) {
 
-        // add teacher to model
-        model.addAttribute("teacher", teacherService.getTeacher(id));
+        // get Course from DB using param id
+        model.addAttribute("course", courseService.getCourse(id));
 
-        // get teacher's course list & add to model
-        model.addAttribute("teacherCourseList", teacherService.getTeacher(id).getCourses());
+        // get list of students from DB
+        model.addAttribute("studentList", studentService.getAllStudents());
 
-        // get list of unassigned courses
-        model.addAttribute("courseList", courseService.getCoursesWithoutTeachers());
-
-        return "teacher-assign";
+        return "course-assign";
     }
 
-    // assign teacher to specified course
-    @PostMapping("/teacher-assign")
-    public String teacherAssign(@RequestParam Long courseId, @RequestParam Long teacherId) {
-        // retrieve teacher from DB
-        Teacher teacher = teacherService.getTeacher(teacherId);
+    // assign course to students
+    @PostMapping("/course-assign")
+    public String courseAssign(@RequestParam Long courseId, @RequestParam Long studentId, RedirectAttributes redirectAttributes) {
 
-        // assign teacher to course
+        // get student from DB
+        Student student = studentService.getStudent(studentId);
+
+        // get course from DB
         Course course = courseService.getCourse(courseId);
 
-        // save teacher and course to DB
-        teacher.addCourse(course);
-        teacherService.saveTeacher(teacher);
+        // assign course to stud & assign stud to course
+        student.addCourse(course);
+        course.addStudents(student);
 
-        return "redirect:/admin/teacher-assign?id=" + teacherId;
+        // persist stud & course
+        studentService.saveStudent(student);
+
+        // redirect to assign page w/ succ msg
+        redirectAttributes.addFlashAttribute("successMessage", "Assigned " + course.getName() + " to " + student.getName() + "!");
+
+        return "redirect:/admin/course-assign?id=" + courseId;
     }
 
 }
