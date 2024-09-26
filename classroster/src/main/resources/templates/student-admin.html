@@ -15,8 +15,8 @@
 </form>
 
 <!-- add student button -->
-<form th:action="@{/admin/student-add}" method="get" style="display: inline">
-    <input type="hidden" id="student-add">
+<form th:action="@{/admin/student/add}" method="get" style="display: inline">
+    <input type="hidden" id="student">
     <button type="submit">Add Student</button>
 </form>
 
@@ -27,20 +27,20 @@
         <span th:text="${student.name}"></span>
 
         <!-- Update button -->
-        <form th:action="@{/admin/student-update}" method="get" style="display: inline">
-            <input type="hidden" id="student-update" th:value="${student.id}">
+        <form th:action="@{/admin/student/update}" method="get" style="display: inline">
+            <input type="hidden" name="id" th:value="${student.id}">
             <button type="submit">Update</button>
         </form>
 
         <!-- Delete student button -->
-        <form th:action="@{/admin/student-delete}" method="get" style="display: inline">
-            <input type="hidden" id="student-delete" th:value="${student.id}">
+        <form th:action="@{/admin/student/delete}" method="post" style="display: inline">
+            <input type="hidden" name="id" th:value="${student.id}">
             <button type="submit">Delete</button>
         </form>
 
         <!-- Assign course to student button -->
-        <form th:action="@{/admin/student-assign}" method="get" style="display: inline">
-            <input type="hidden" id="student-assign" th:value="${student.id}">
+        <form th:action="@{/admin/student/assign}" method="get" style="display: inline">
+            <input type="hidden" name="id" th:value="${student.id}">
             <button type="submit">Assign Course</button>
         </form>
 

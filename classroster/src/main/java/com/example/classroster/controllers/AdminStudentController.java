@@ -68,7 +68,7 @@ public class AdminStudentController {
         return "student-details";
     }
 
-    // Add Student
+    // Display add student page
     @GetMapping("/add")
     public String studentAdd(Model model) {
 
@@ -79,7 +79,7 @@ public class AdminStudentController {
     }
 
     // Adds Student created by user data. Redirects to previous page - "student-add"
-    @PostMapping("/student-add")
+    @PostMapping("/add")
     public String studentAdd(@ModelAttribute Student student, RedirectAttributes redirectAttributes) {
 
         // save student to DB
@@ -109,7 +109,7 @@ public class AdminStudentController {
         currentStudent.setName(student.getName());
         studentService.saveStudent(currentStudent);
 
-        return "redirect:/admin/student/update/success" + currentStudent.getId();
+        return "redirect:/admin/student/update/success/" + currentStudent.getId();
     }
 
     // display updated student success page
@@ -135,7 +135,7 @@ public class AdminStudentController {
         redirectAttributes.addFlashAttribute("successMessage", studentName + " Student successfully deleted!");
 
         // redirect to admin student home page
-        return "redirect:/home";
+        return "redirect:/admin/student/home";
     }
 
     // Assign button
