@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Update Page</title>
+</head>
+<body>
+<h1>Student Update Works!</h1>
+
+<!-- Form to update student-->
+<form th:action="@{/admin/student/update}" th:object="${student}" method="post">
+  <label for="name">Name: </label>
+  <input type="hidden" th:field="${student.id}">
+  <input type="text" th:field="${student.name}" id="name">
+  <button type="submit">Submit</button>
+</form>
+</body>
+</html>
