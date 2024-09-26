@@ -34,6 +34,9 @@ public class BootStrap implements CommandLineRunner {
         courseService.saveCourse(new Course("Spanish 101"));
         courseService.saveCourse(new Course("Biology 101"));
         courseService.saveCourse(new Course("Chemistry 101"));
+        for (int i = 1; i < 21; i ++) {
+            courseService.saveCourse(new Course("Course" + i));
+        }
 
 
         // create list of courses to add to teacher
@@ -42,17 +45,19 @@ public class BootStrap implements CommandLineRunner {
         courses.add(new Course("Math 101"));
         courses.add(new Course("Physics 101"));
 
-
         // create new teachers and add them to DBs
         teacherService.saveTeacher(new Teacher("Justin", courses));
-        teacherService.saveTeacher(new Teacher("Teacher2"));
-        teacherService.saveTeacher(new Teacher("Teacher3"));
+        for(int i = 1; i < 11; i ++) {
+            teacherService.saveTeacher(new Teacher("Teacher" + i));
+        }
 
         // create new studs and add them to DBs
         studentService.saveStudent(new Student("Justin"));
         studentService.saveStudent(new Student("Osckie"));
         studentService.saveStudent(new Student("Elijah"));
-
+        for (int i = 1; i < 61; i ++) {
+            studentService.saveStudent(new Student("Student" + i));
+        }
 
     }
 }
