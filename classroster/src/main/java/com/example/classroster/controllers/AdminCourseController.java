@@ -60,6 +60,7 @@ public class AdminCourseController {
 
             }
     }
+
     // display course details page based on the id param
     @GetMapping("/courses/{id}")
     public String courseDetails(@PathVariable Long id, Model model) { // get parameter from URL based on its name

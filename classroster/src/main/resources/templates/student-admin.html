@@ -8,7 +8,7 @@
 <h1>Manage Students</h1>
 
 <!--Display form to search for a student-->
-<form th:action="@{/admin/student-search}" th:object="${searchStudent}" method="post" style="display: inline"> <!-- Pass text to controller that will handle searching for a student -->
+<form th:action="@{/admin/student/search}" th:object="${searchStudent}" method="post" style="display: inline"> <!-- Pass text to controller that will handle searching for a student -->
     <label for="search">Student Id</label>
     <input type="text" id="search" th:field="${searchStudent.id}" placeholder="Enter Student Id"> <!-- th:field specifies what obj's field to work wtih -->
     <button type="submit" style="display: inline">Search</button>
