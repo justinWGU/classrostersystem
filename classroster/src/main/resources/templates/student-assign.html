@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Student Assign Page</title>
+  <link rel="stylesheet" th:href="@{/styles.css}">
+</head>
+<body>
+
+<!-- conditionally print succ message -->
+<div th:if="${successMessage}" th:text="${successMessage}"></div>
+
+<p>Course List:</p>
+
+<!-- print unordered list of courses with an "Assign" button beside each on -->
+<ul th:each="course : ${courseList}">
+
+  <!-- conditionally display course if they are not already enrolled in it -->
+  <th:block th:if="${!student.courses.contains(course)}">
+
+    <li>
+      <span th:text="${course.name}"></span>
+
+      <!-- assign button that sends both course and student id -->
+      <form th:action="@{/admin/student/assign}" method="post" style="display: inline">
+        <input type="hidden" name="courseId" th:value="${course.id}">
+        <input type="hidden" name="studentId" th:value="${student.id}">
+        <button type="submit">Assign</button>
+      </form>
+
+    </li>
+
+  </th:block>
+
+</ul>
+
+</body>
+</html>
