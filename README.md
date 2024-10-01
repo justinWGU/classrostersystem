@@ -1,4 +1,4 @@
-# Class Roster System
+# *Class Roster System*
 
 ## Author
 Justin Ortiz
@@ -26,32 +26,36 @@ as assign courses to teachers and students.
 1. Clone the repository:
     ```
     git clone https://github.com/justinWGU/classrostersystem.git
-    cd /classrostersystem
-   Set up the database:
+    
+2. Navigate to the project:
+   ``` 
+   cd /classrostersystem
+      
+3. Set up the database:
 
-Create a MySQL database.
-Run the SQL script located in /src/main/resources/db to set up the database structure.
-Configure application properties:
+4. Create a MySQL database.
+   To set up the database structure, run the SQL script located in "/src/main/resources/db".
 
-Update src/main/resources/application.properties with your local MySQL credentials:
-properties
-Copy code
-spring.datasource.url=jdbc:mysql://localhost:3306/your_database_name
-spring.datasource.username=your_username
-spring.datasource.password=your_password
-Build the project:
+5. Configure application properties:
 
-bash
-Copy code
-mvn clean install
-Run the Spring Boot application:
+   Update "src/main/resources/application.properties" with your local MySQL credentials:
+   ```
+   spring.datasource.url=jdbc:mysql://localhost:3306/your_database_name
+   spring.datasource.username=your_username
+   spring.datasource.password=your_password
+   spring.jpa.hibernate.ddl-auto=create
 
-bash
-Copy code
-mvn spring-boot:run
-Access the application:
+7. Build the project:
+   ```
+   mvn clean install
 
-Open your browser at http://localhost:8080 or use Postman for API testing.
+8. Run the Spring Boot application:
+   ```
+   mvn spring-boot:run
+
+9. Access the application:
+
+- Open your browser at http://localhost:8080/home
 
 ## Technologies
 - Spring Boot 
